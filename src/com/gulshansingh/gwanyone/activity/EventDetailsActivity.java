@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.R;
@@ -25,7 +26,9 @@ public class EventDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_details);
 		prefs = new PreferenceInterface(this);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(getIntent().getStringExtra("event_name"));
 
 		populatePeopleGoing();
 	}

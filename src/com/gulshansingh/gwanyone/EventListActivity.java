@@ -3,6 +3,7 @@ package com.gulshansingh.gwanyone;
 import java.util.Calendar;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ListActivity;
 import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.LinearLayout;
@@ -10,12 +11,12 @@ import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 import org.holoeverywhere.widget.Toast;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -93,13 +94,28 @@ public class EventListActivity extends ListActivity {
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int button) {
-						EditText editText = (EditText) layout
-								.findViewById(R.id.username_input);
-						user = editText.getText().toString();
-						prefs.setUsername(user);
+						// Do nothing for now
 					}
 				});
-		builder.show();
+		final AlertDialog d = builder.show();
+
+		android.widget.Button b = d.getButton(AlertDialog.BUTTON_POSITIVE);
+		b.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				EditText editText = (EditText) layout
+						.findViewById(R.id.username_input);
+				user = editText.getText().toString();
+				if (!user.equals("")) {
+					prefs.setUsername(user);
+					d.dismiss();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"That's not a valid username!", Toast.LENGTH_SHORT)
+							.show();
+				}
+			}
+		});
 	}
 
 	private int getCurrentWeek() {
@@ -114,12 +130,6 @@ public class EventListActivity extends ListActivity {
 		// If this is a first time use, set the alarm and get a username
 		if (user == null) {
 			AlarmSetter.setAlarm(this);
-			promptUsername();
-		}
-
-		// TODO What happens if they still don't give a name?
-		// If the user is stupid and didn't give a username, ask again
-		if (user != null && user.equals("")) {
 			promptUsername();
 		}
 

@@ -2,18 +2,19 @@ package com.gulshansingh.gwanyone;
 
 import java.util.ArrayList;
 
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.widget.TextView;
+import org.holoeverywhere.widget.Toast;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import com.WazaBe.HoloEverywhere.sherlock.SActivity;
-import com.WazaBe.HoloEverywhere.widget.TextView;
-import com.WazaBe.HoloEverywhere.widget.Toast;
-import com.WazaBe.HoloEverywhere.widget.View;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.network.ServerInterface;
 
-public class EventDetailsActivity extends SActivity {
+public class EventDetailsActivity extends Activity {
 
 	private ServerInterface serverInterface = new ServerInterface();
 	private PreferenceInterface prefs;

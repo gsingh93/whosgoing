@@ -2,6 +2,14 @@ package com.gulshansingh.gwanyone;
 
 import java.util.Calendar;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.ListActivity;
+import org.holoeverywhere.widget.EditText;
+import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.TextView;
+import org.holoeverywhere.widget.Toast;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,19 +22,12 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
 
-import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.sherlock.SListActivity;
-import com.WazaBe.HoloEverywhere.widget.EditText;
-import com.WazaBe.HoloEverywhere.widget.LinearLayout;
-import com.WazaBe.HoloEverywhere.widget.ListView;
-import com.WazaBe.HoloEverywhere.widget.TextView;
-import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
 import com.gulshansingh.gwanyone.notification.AlarmSetter;
 
-public class EventListActivity extends SListActivity {
+public class EventListActivity extends ListActivity {
 
 	private String user;
 	private int week;

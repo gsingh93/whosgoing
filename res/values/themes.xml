@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="@style/Holo.Theme.Sherlock">
+    <style name="AppTheme" parent="@style/Holo.Theme">
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

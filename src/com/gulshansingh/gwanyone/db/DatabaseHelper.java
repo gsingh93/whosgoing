@@ -1,10 +1,14 @@
 package com.gulshansingh.gwanyone.db;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.gulshansingh.gwanyone.Event;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -54,6 +58,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NAME }, null,
 				null, null, null, null);
 		return cursor;
+	}
+
+	// TODO
+	public Event getEvent(String eventName) {
+		return new Event(eventName,
+				new Date(System.currentTimeMillis() + 60000));
 	}
 
 }

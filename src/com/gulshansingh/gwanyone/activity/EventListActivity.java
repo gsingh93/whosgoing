@@ -1,4 +1,4 @@
-package com.gulshansingh.gwanyone;
+package com.gulshansingh.gwanyone.activity;
 
 import java.util.Calendar;
 
@@ -25,6 +25,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
 import com.gulshansingh.gwanyone.network.ServerInterface;
 import com.gulshansingh.gwanyone.notification.AlarmSetter;
@@ -63,6 +64,7 @@ public class EventListActivity extends ListActivity {
 					int position, long id) {
 				Intent intent = new Intent(getApplicationContext(),
 						EventDetailsActivity.class);
+				intent.putExtra("event_name", ((TextView) view).getText());
 				startActivity(intent);
 			}
 		});
@@ -181,7 +183,7 @@ public class EventListActivity extends ListActivity {
 		Intent intent;
 		switch (id) {
 		case R.id.menu_new_event:
-			intent = new Intent(this, CreateEventActivity.class);
+			intent = new Intent(this, EditEventActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.menu_refresh:

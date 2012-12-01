@@ -1,4 +1,4 @@
-package com.gulshansingh.gwanyone;
+package com.gulshansingh.gwanyone.activity;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.network.ServerInterface;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 
@@ -65,15 +66,21 @@ public class EventDetailsActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
+		Intent intent;
 		switch (id) {
 		case android.R.id.home:
-			Intent intent = new Intent(this, EventListActivity.class);
+			intent = new Intent(this, EventListActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
 		case R.id.menu_refresh:
 			populatePeopleGoing();
 			break;
+		case R.id.menu_edit:
+			intent = new Intent(this, EditEventActivity.class);
+			intent.putExtra("event_name",
+					getIntent().getStringExtra("event_name"));
+			startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}

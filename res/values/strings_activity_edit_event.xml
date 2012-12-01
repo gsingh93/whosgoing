@@ -2,7 +2,7 @@
 <resources>
 
     <string name="title_activity_create_event">CreateEventActivity</string>
-    <string name="menu_save_new_event">Save</string>
+    <string name="menu_save">Save</string>
     <string name="label_event_name">Event Name</string>
     <string name="label_event_date">Date</string>
     <string name="label_event_time">Time</string>

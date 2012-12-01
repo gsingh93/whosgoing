@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.text.InputFilter;
 
 import com.actionbarsherlock.view.MenuItem;
-import com.gulshansingh.gwanyone.EventListActivity;
 import com.gulshansingh.gwanyone.R;
+import com.gulshansingh.gwanyone.activity.EventListActivity;
 
 public class SettingsActivity extends PreferenceActivity {
 

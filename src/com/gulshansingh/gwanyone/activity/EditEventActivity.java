@@ -47,6 +47,7 @@ public class EditEventActivity extends Activity {
 		int minute = calendar.get(Calendar.MINUTE);
 
 		editTextName.setText(event.getName());
+		editTextName.setSelection(event.getName().length());
 		datePicker.setMinDate(System.currentTimeMillis() - 1000);
 		datePicker.updateDate(year, month, dayOfMonth);
 		timePicker.setCurrentHour(hour);

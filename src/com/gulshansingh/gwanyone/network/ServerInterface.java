@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
@@ -24,14 +25,53 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class ServerInterface {
-	
+
 	private enum Answer {
 		YES, NO
 	}
+
 	private static final String TAG = ServerInterface.class.getName();
 
 	private static final String URL = "http://www.gulshansingh.com/dev/gwanyone/handler.php";
-	
+
+	private static final String REGISTER_URL = "http://www.gulshansingh.com/dev/gwanyone/register.php";
+
+	public void registerUser(String username) {
+		new RegisterUserTask().execute(username);
+	}
+
+	private class RegisterUserTask extends AsyncTask<String, Void, Void> {
+		@Override
+		protected Void doInBackground(String... args) {
+			if (args.length != 1) {
+				throw new IllegalArgumentException();
+			}
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(REGISTER_URL);
+
+			try {
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+				nameValuePairs.add(new BasicNameValuePair("user", args[0]));
+
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+						nameValuePairs);
+				httpPost.addHeader(entity.getContentType());
+				httpPost.setEntity(entity);
+
+				HttpResponse response = httpClient.execute(httpPost);
+
+				Log.d(TAG, "Server response is "
+						+ response.getStatusLine().getStatusCode());
+
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
 	public ArrayList<String> getPeopleGoing() {
 		AsyncTask<Answer, Void, ArrayList<String>> task = new GetPeopleTask()
 				.execute(Answer.YES);
@@ -40,10 +80,8 @@ public class ServerInterface {
 		try {
 			result = task.get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -58,10 +96,8 @@ public class ServerInterface {
 		try {
 			result = task.get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -89,20 +125,21 @@ public class ServerInterface {
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 				nameValuePairs.add(new BasicNameValuePair("user", args[1]));
 				nameValuePairs.add(new BasicNameValuePair("answer", args[0]));
-				
-				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+						nameValuePairs);
 				httpPost.addHeader(entity.getContentType());
 				httpPost.setEntity(entity);
-				
+
 				HttpResponse response = httpClient.execute(httpPost);
 
 				Log.d(TAG, "Server response is "
 						+ response.getStatusLine().getStatusCode());
 
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
 		}
@@ -117,7 +154,7 @@ public class ServerInterface {
 			}
 
 			String url = URL + "?" + "answer="
-					+ args[0].toString().toLowerCase();
+					+ args[0].toString().toLowerCase(Locale.US);
 
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(url);
@@ -140,11 +177,10 @@ public class ServerInterface {
 						+ response.getStatusLine().getStatusCode());
 
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

@@ -26,6 +26,7 @@ import android.widget.SimpleCursorAdapter;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
+import com.gulshansingh.gwanyone.network.ServerInterface;
 import com.gulshansingh.gwanyone.notification.AlarmSetter;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 import com.gulshansingh.gwanyone.settings.SettingsActivity;
@@ -36,6 +37,7 @@ public class EventListActivity extends ListActivity {
 	private int week;
 
 	private PreferenceInterface prefs;
+	private ServerInterface serverInterface = new ServerInterface();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,7 @@ public class EventListActivity extends ListActivity {
 				user = editText.getText().toString();
 				if (!user.equals("")) {
 					prefs.setUsername(user);
+					serverInterface.registerUser(user);
 					d.dismiss();
 				} else {
 					Toast.makeText(getApplicationContext(),

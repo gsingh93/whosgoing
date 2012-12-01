@@ -37,7 +37,7 @@
         <receiver android:name="com.gulshansingh.gwanyone.notification.AlarmReceiver" />
 
         <activity
-            android:name="com.gulshansingh.gwanyone.SettingsActivity"
+            android:name="com.gulshansingh.gwanyone.settings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

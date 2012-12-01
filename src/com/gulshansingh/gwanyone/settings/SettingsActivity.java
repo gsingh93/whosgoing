@@ -7,6 +7,7 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.text.InputFilter;
 
 import com.gulshansingh.gwanyone.R;
 
@@ -21,6 +22,9 @@ public class SettingsActivity extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.pref_general);
 		EditTextPreference e = (EditTextPreference) findPreference("usernamePref");
 		e.setSummary(e.getText().toString());
+
+		e.getEditText().setFilters(
+				new InputFilter[] { new InputFilter.LengthFilter(15) });
 		e.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference,

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.TextView;
-import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,8 +63,6 @@ public class EventDetailsActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast toast = Toast.makeText(this, "Not implemented yet",
-				Toast.LENGTH_SHORT);
 		int id = item.getItemId();
 		switch (id) {
 		case android.R.id.home:
@@ -73,14 +70,8 @@ public class EventDetailsActivity extends Activity {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
-		case R.id.menu_new_event:
-			toast.show();
-			break;
 		case R.id.menu_refresh:
-			toast.show();
-			break;
-		case R.id.menu_settings:
-			toast.show();
+			populatePeopleGoing();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

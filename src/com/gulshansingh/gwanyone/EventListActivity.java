@@ -41,9 +41,6 @@ public class EventListActivity extends ListActivity {
 		setContentView(R.layout.activity_event_list);
 		prefs = new PreferenceInterface(this);
 
-		Toast.makeText(this, "Welcome " + prefs.getUsername(),
-				Toast.LENGTH_SHORT).show();
-
 		init();
 
 		DatabaseHelper db = new DatabaseHelper(this);

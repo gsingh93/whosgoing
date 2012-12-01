@@ -12,6 +12,7 @@ import android.view.View;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.network.ServerInterface;
+import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 
 public class EventDetailsActivity extends Activity {
 

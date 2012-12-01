@@ -27,6 +27,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
 import com.gulshansingh.gwanyone.notification.AlarmSetter;
+import com.gulshansingh.gwanyone.settings.PreferenceInterface;
+import com.gulshansingh.gwanyone.settings.SettingsActivity;
 
 public class EventListActivity extends ListActivity {
 

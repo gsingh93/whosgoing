@@ -6,31 +6,31 @@
     android:orientation="vertical" >
 
     <TextView
-        style="@style/header"
+        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/people_going_header" />
 
     <TextView
         android:id="@+id/people_going"
-        style="@style/peopleList"
+        style="@style/PeopleList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        style="@style/header"
+        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/people_not_going_header" />
 
     <TextView
         android:id="@+id/people_not_going"
-        style="@style/peopleList"
+        style="@style/PeopleList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        style="@style/header"
+        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/going_question" />

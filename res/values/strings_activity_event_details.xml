@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="people_going_header">peepz who goin\':</string>
+    <string name="people_not_going_header">homies who be bailin\':</string>
+    <string name="no_people_going">no homies r goin\' yo</string>
+    <string name="going_question">iz u goin\'???</string>
+    <string name="yes">fo sho</string>
+    <string name="no">hellz naw</string>
+
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="no_events">There are currently no events in the list</string>
+    <string name="title_activity_event_list">EventListActivity</string>
+
+</resources>

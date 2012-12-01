@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.gulshansingh.gwanyone.EventDetailsActivity;
-import com.gulshansingh.gwanyone.PreferenceInterface;
 import com.gulshansingh.gwanyone.R;
+import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 
 public class NotificationSender extends BroadcastReceiver {
 	private static final String TAG = NotificationSender.class.getName();

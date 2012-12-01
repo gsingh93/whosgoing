@@ -1,6 +1,9 @@
-package com.gulshansingh.gwanyone;
+package com.gulshansingh.gwanyone.settings;
 
 import org.holoeverywhere.widget.Toast;
+
+import com.gulshansingh.gwanyone.R;
+import com.gulshansingh.gwanyone.R.xml;
 
 import android.os.Bundle;
 import android.preference.EditTextPreference;

@@ -1,4 +1,4 @@
-package com.gulshansingh.gwanyone;
+package com.gulshansingh.gwanyone.settings;
 
 import org.holoeverywhere.preference.PreferenceManager;
 

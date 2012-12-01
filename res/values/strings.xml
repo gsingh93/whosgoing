@@ -2,18 +2,8 @@
 
     <string name="app_name">GW Anyone</string>
     <string name="title">GW Anyone???</string>
-    <string name="people_going_header">peepz who goin\':</string>
-    <string name="people_not_going_header">homies who be bailin\':</string>
-    <string name="no_people_going">no homies r goin\' yo</string>
-    <string name="going_question">iz u goin\'???</string>
-    <string name="yes">fo sho</string>
-    <string name="no">hellz naw</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_new_event">Create New Event</string>
     <string name="menu_refresh">Refresh</string>
-    <string name="no_events">There are currently no events in the list</string>
-    <string name="title_activity_event_list">EventListActivity</string>
-    <string name="title_activity_create_event">CreateEventActivity</string>
-	<string name="menu_save_new_event">Save</string>    
 
 </resources>

@@ -2,7 +2,7 @@
 
     <style name="TitleFont">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">35dp</item>
+        <item name="android:textSize">35sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -11,16 +11,16 @@
         <item name="background">@drawable/title_gradient</item>
     </style>
 
-    <style name="peopleList">
+    <style name="PeopleList">
         <item name="android:textColor">#0066FF</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginBottom">100dp</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
 
-    <style name="header">
-        <item name="android:textSize">25dp</item>
+    <style name="ListHeader">
+        <item name="android:textSize">25sp</item>
     </style>
 
 </resources>

@@ -28,7 +28,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
 import com.gulshansingh.gwanyone.network.ServerInterface;
-import com.gulshansingh.gwanyone.notification.AlarmSetter;
+import com.gulshansingh.gwanyone.notification.NotificationAlarmSetter;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 import com.gulshansingh.gwanyone.settings.SettingsActivity;
 
@@ -133,7 +133,7 @@ public class EventListActivity extends ListActivity {
 		user = prefs.getUsername();
 		// If this is a first time use, set the alarm and get a username
 		if (user == null) {
-			AlarmSetter.setAlarm(this);
+			NotificationAlarmSetter.setAlarm(this);
 			promptUsername();
 		}
 

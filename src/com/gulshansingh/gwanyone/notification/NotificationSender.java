@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.gulshansingh.gwanyone.EventDetailsActivity;
 import com.gulshansingh.gwanyone.R;
+import com.gulshansingh.gwanyone.activity.EventDetailsActivity;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 
 public class NotificationSender extends BroadcastReceiver {
@@ -30,6 +30,8 @@ public class NotificationSender extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		PreferenceInterface prefs = new PreferenceInterface(context);
 
+		Log.d(TAG, "Got intent with time " + intent.getLongExtra("time", 25));
+		
 		this.context = context;
 		notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);

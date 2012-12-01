@@ -30,13 +30,13 @@
             android:theme="@style/AppTheme.CreateEvent" />
 
         <receiver
-            android:name="com.gulshansingh.gwanyone.notification.NotificationSender"
+            android:name="com.gulshansingh.gwanyone.notification.NotificationAlarmSetter"
             android:process=":remote" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.gulshansingh.gwanyone.notification.AlarmReceiver" />
+        <receiver android:name="com.gulshansingh.gwanyone.notification.NotificationSender" />
 
         <activity
             android:name="com.gulshansingh.gwanyone.settings.SettingsActivity"

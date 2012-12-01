@@ -1,19 +1,21 @@
 package com.gulshansingh.gwanyone;
 
+import org.holoeverywhere.preference.PreferenceManager;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PreferenceInterface {
 
-	public static final String PREF_NAME = "gwanyone_prefs";
-	private static final String USER_KEY = "user";
+	private static final String USER_KEY = "usernamePref";
 	private static final String ANSWERED_KEY = "answer";
 	private static final String WEEK_KEY = "week";
 
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor editor;
 
-	public PreferenceInterface(SharedPreferences prefs) {
-		this.prefs = prefs;
+	public PreferenceInterface(Context context) {
+		this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		this.editor = prefs.edit();
 	}
 	

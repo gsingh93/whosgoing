@@ -23,8 +23,7 @@ public class EventDetailsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_details);
-		prefs = new PreferenceInterface(getSharedPreferences(
-				PreferenceInterface.PREF_NAME, MODE_PRIVATE));
+		prefs = new PreferenceInterface(this);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		populatePeopleGoing();

@@ -27,9 +27,7 @@ public class NotificationSender extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		PreferenceInterface prefs = new PreferenceInterface(
-				context.getSharedPreferences(PreferenceInterface.PREF_NAME,
-						Context.MODE_PRIVATE));
+		PreferenceInterface prefs = new PreferenceInterface(context);
 
 		this.context = context;
 		notificationManager = (NotificationManager) context

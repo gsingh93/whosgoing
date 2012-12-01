@@ -38,8 +38,11 @@ public class EventListActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_list);
-		prefs = new PreferenceInterface(getSharedPreferences(
-				PreferenceInterface.PREF_NAME, MODE_PRIVATE));
+		prefs = new PreferenceInterface(this);
+
+		Toast.makeText(this, "Welcome " + prefs.getUsername(),
+				Toast.LENGTH_SHORT).show();
+
 		init();
 
 		DatabaseHelper db = new DatabaseHelper(this);
@@ -163,17 +166,18 @@ public class EventListActivity extends ListActivity {
 		Toast toast = Toast.makeText(this, "Not implemented yet",
 				Toast.LENGTH_SHORT);
 		int id = item.getItemId();
+		Intent intent;
 		switch (id) {
 		case R.id.menu_new_event:
-			Intent intent = new Intent(this, CreateEventActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-			startActivityForResult(intent, 0);
+			intent = new Intent(this, CreateEventActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.menu_refresh:
 			toast.show();
 			break;
 		case R.id.menu_settings:
-			toast.show();
+			intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

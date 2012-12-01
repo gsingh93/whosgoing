@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.gulshansingh.gwanyone.EventDetailsActivity;
@@ -51,15 +52,20 @@ public class NotificationSender extends BroadcastReceiver {
 		// Show the notification now
 		long when = System.currentTimeMillis();
 
-		// Construct the notification TODO
-		Notification notification = new Notification(icon, tickerText, when);
-		notification.setLatestEventInfo(context, contentTitle, contentText,
-				pIntent);
+		// Construct the notification
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(
+				context);
+		// @formatter:off
+		builder.setContentIntent(pIntent)
+				.setSmallIcon(icon)
+				.setTicker(tickerText)
+				.setAutoCancel(true)
+				.setWhen(when)
+				.setContentTitle(contentTitle)
+				.setContentText(contentText);
+		// @formatter:on
 
-		// Remove the notification after it is clicked
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-		return notification;
+		return builder.getNotification();
 	}
 
 	private PendingIntent createIntent() {

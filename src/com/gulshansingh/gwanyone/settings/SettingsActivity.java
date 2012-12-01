@@ -1,14 +1,17 @@
 package com.gulshansingh.gwanyone.settings;
 
+import org.holoeverywhere.preference.EditTextPreference;
+import org.holoeverywhere.preference.Preference;
+import org.holoeverywhere.preference.Preference.OnPreferenceChangeListener;
+import org.holoeverywhere.preference.PreferenceActivity;
 import org.holoeverywhere.widget.Toast;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
 import android.text.InputFilter;
 
+import com.actionbarsherlock.view.MenuItem;
+import com.gulshansingh.gwanyone.EventListActivity;
 import com.gulshansingh.gwanyone.R;
 
 public class SettingsActivity extends PreferenceActivity {
@@ -17,7 +20,7 @@ public class SettingsActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO ActionBar up navigation
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		addPreferencesFromResource(R.xml.pref_general);
 		EditTextPreference e = (EditTextPreference) findPreference("usernamePref");
@@ -41,5 +44,21 @@ public class SettingsActivity extends PreferenceActivity {
 				return true;
 			}
 		});
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		switch (id) {
+		case android.R.id.home:
+			Intent intent = new Intent(this, EventListActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+		return true;
 	}
 }

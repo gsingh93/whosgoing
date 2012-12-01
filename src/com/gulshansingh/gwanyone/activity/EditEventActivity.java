@@ -23,6 +23,7 @@ public class EditEventActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_event);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		String eventName = getIntent().getStringExtra("event_name");
 		if (eventName != null) {
 			DatabaseHelper helper = new DatabaseHelper(this);
@@ -65,13 +66,21 @@ public class EditEventActivity extends Activity {
 				Toast.LENGTH_SHORT);
 		int id = item.getItemId();
 		DatabaseHelper helper = new DatabaseHelper(this);
+		Intent intent;
 		switch (id) {
+		case android.R.id.home:
+			intent = new Intent(this, EventDetailsActivity.class);
+			intent.putExtra("event_name",
+					getIntent().getStringExtra("event_name"));
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			break;
 		case R.id.menu_save:
 			EditText eventNameEditText = (EditText) findViewById(R.id.event_name);
 			String eventName = eventNameEditText.getText().toString();
 			if (!eventName.equals("")) {
 				helper.addEvent(eventName);
-				Intent intent = new Intent(this, EventListActivity.class);
+				intent = new Intent(this, EventListActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 			} else {

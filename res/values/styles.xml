@@ -7,8 +7,8 @@
     </style>
 
     <style name="ActionBarStyle" parent="Widget.Sherlock.ActionBar">
-        <item name="android:background">@drawable/title_gradient</item>
-        <item name="background">@drawable/title_gradient</item>
+        <item name="android:background">@drawable/gradient_action_bar</item>
+        <item name="background">@drawable/gradient_action_bar</item>
     </style>
 
     <style name="PeopleList">

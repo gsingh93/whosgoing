@@ -31,6 +31,7 @@ import com.gulshansingh.gwanyone.network.ServerInterface;
 import com.gulshansingh.gwanyone.notification.NotificationAlarmSetter;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
 import com.gulshansingh.gwanyone.settings.SettingsActivity;
+import com.gulshansingh.gwanyone.thirdparty.ChangeLog;
 
 public class EventListActivity extends ListActivity {
 
@@ -83,6 +84,16 @@ public class EventListActivity extends ListActivity {
 
 		displayChangelog();
 		displayMessage();
+	}
+
+	private void displayChangelog() {
+		ChangeLog cl = new ChangeLog(this);
+		if (cl.firstRun())
+			cl.getLogDialog().show();
+	}
+
+	private void displayMessage() {
+		// TODO
 	}
 
 	private void promptUsername() {
@@ -145,14 +156,6 @@ public class EventListActivity extends ListActivity {
 			week = curWeek;
 			prefs.setAnswered(false);
 		}
-	}
-
-	private void displayChangelog() {
-		// TODO
-	}
-
-	private void displayMessage() {
-		// TODO
 	}
 
 	private void updateAdapter() {

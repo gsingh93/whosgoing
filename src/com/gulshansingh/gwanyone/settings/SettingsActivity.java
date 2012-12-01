@@ -2,14 +2,13 @@ package com.gulshansingh.gwanyone.settings;
 
 import org.holoeverywhere.widget.Toast;
 
-import com.gulshansingh.gwanyone.R;
-import com.gulshansingh.gwanyone.R.xml;
-
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+
+import com.gulshansingh.gwanyone.R;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -17,7 +16,7 @@ public class SettingsActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO ActionBar up navitgation
+		// TODO ActionBar up navigation
 
 		addPreferencesFromResource(R.xml.pref_general);
 		EditTextPreference e = (EditTextPreference) findPreference("usernamePref");

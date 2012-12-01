@@ -40,6 +40,10 @@ public class ServerInterface {
 		new RegisterUserTask().execute(username);
 	}
 
+	public void createEvent() {
+
+	}
+
 	private class RegisterUserTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected Void doInBackground(String... args) {

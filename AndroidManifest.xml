@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.gulshansingh.gwanyone.EventDetailsActivity" />
-        <activity android:name="com.gulshansingh.gwanyone.CreateEventActivity" />
+        <activity
+            android:name="com.gulshansingh.gwanyone.CreateEventActivity"
+            android:theme="@style/AppTheme.CreateEvent" />
 
         <receiver
             android:name="com.gulshansingh.gwanyone.notification.NotificationSender"

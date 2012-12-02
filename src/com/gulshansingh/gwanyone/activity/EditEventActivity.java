@@ -82,8 +82,6 @@ public class EditEventActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast toast = Toast.makeText(this, "Not implemented yet",
-				Toast.LENGTH_SHORT);
 		int id = item.getItemId();
 		DatabaseHelper helper = new DatabaseHelper(this);
 		Intent intent;
@@ -107,15 +105,6 @@ public class EditEventActivity extends Activity {
 				Toast.makeText(this, "You must specify an event name",
 						Toast.LENGTH_SHORT).show();
 			}
-			break;
-		case R.id.menu_new_event:
-			toast.show();
-			break;
-		case R.id.menu_refresh:
-			toast.show();
-			break;
-		case R.id.menu_settings:
-			toast.show();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

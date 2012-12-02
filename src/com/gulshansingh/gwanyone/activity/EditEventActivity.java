@@ -1,21 +1,25 @@
 package com.gulshansingh.gwanyone.activity;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.widget.DatePicker;
 import org.holoeverywhere.widget.EditText;
-import org.holoeverywhere.widget.TimePicker;
+import org.holoeverywhere.widget.TextView;
 import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gulshansingh.gwanyone.Event;
 import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
+import com.gulshansingh.gwanyone.ui.DatePickerFragment;
+import com.gulshansingh.gwanyone.ui.TimePickerFragment;
 
 public class EditEventActivity extends Activity {
 
@@ -25,33 +29,48 @@ public class EditEventActivity extends Activity {
 		setContentView(R.layout.activity_edit_event);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		String eventName = getIntent().getStringExtra("event_name");
+
+		Date date;
 		if (eventName != null) {
 			DatabaseHelper helper = new DatabaseHelper(this);
 			Event event = helper.getEvent(eventName);
 			initWidgets(event);
+			date = event.getDate();
+		} else {
+			date = new Date();
 		}
+
+		SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a",
+				Locale.US);
+		TextView spinnerTimePicker = (TextView) findViewById(R.id.spinner_time_chooser);
+		spinnerTimePicker.setText(timeFormatter.format(date));
+		TimePickerFragment.initView(
+				(TextView) findViewById(R.id.spinner_time_chooser), date);
+
+		TextView spinnerDatePicker = (TextView) findViewById(R.id.spinner_date_chooser);
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(
+				"EEE, MMM d, yyyy", Locale.US);
+		spinnerDatePicker.setText(dateFormatter.format(date));
+		DatePickerFragment.initView(
+				(TextView) findViewById(R.id.spinner_date_chooser), date);
+	}
+
+	public void onDateSpinnerClick(View v) {
+		DatePickerFragment d = new DatePickerFragment();
+		d.show(getSupportFragmentManager());
+	}
+
+	public void onTimeSpinnerClick(View v) {
+		TimePickerFragment d = new TimePickerFragment();
+		d.show(getSupportFragmentManager());
 	}
 
 	private void initWidgets(Event event) {
 		EditText editTextName = (EditText) findViewById(R.id.event_name);
-		DatePicker datePicker = (DatePicker) findViewById(R.id.event_date);
-		TimePicker timePicker = (TimePicker) findViewById(R.id.event_time);
 		EditText editTextDetails = (EditText) findViewById(R.id.event_details);
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(event.getDate());
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		int minute = calendar.get(Calendar.MINUTE);
 
 		editTextName.setText(event.getName());
 		editTextName.setSelection(event.getName().length());
-		datePicker.setMinDate(System.currentTimeMillis() - 1000);
-		datePicker.updateDate(year, month, dayOfMonth);
-		timePicker.setCurrentHour(hour);
-		timePicker.setCurrentMinute(minute);
 		editTextDetails.setText(event.getDetails());
 	}
 

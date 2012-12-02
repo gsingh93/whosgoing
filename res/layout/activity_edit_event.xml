@@ -24,22 +24,28 @@
             android:layout_height="wrap_content"
             android:text="@string/label_event_date" />
 
-        <DatePicker
-            android:id="@+id/event_date"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" >
 
-        <include layout="@layout/image_divider" />
+            <TextView
+                android:id="@+id/spinner_date_chooser"
+                style="@style/Holo.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onDateSpinnerClick" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_event_time" />
-
-        <TimePicker
-            android:id="@+id/event_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/spinner_time_chooser"
+                style="@style/Holo.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onTimeSpinnerClick" />
+        </LinearLayout>
 
         <include layout="@layout/image_divider" />
 
@@ -53,7 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:hint="Details..."
             android:inputType="textCapSentences|textMultiLine" />
     </LinearLayout>
 

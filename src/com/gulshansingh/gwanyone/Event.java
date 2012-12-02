@@ -7,9 +7,10 @@ public class Event {
 	private Date date;
 	private String details;
 
-	public Event(String name, Date date) {
+	public Event(String name, Date date, String details) {
 		this.name = name;
 		this.date = date;
+		this.details = details;
 	}
 
 	public String getName() {

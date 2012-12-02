@@ -28,12 +28,12 @@ public class EditEventActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_event);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		String eventName = getIntent().getStringExtra("event_name");
+		int eventId = getIntent().getIntExtra("event_id", -1);
 
 		Date date;
-		if (eventName != null) {
+		if (eventId != -1) {
 			DatabaseHelper helper = new DatabaseHelper(this);
-			Event event = helper.getEvent(eventName);
+			Event event = helper.getEvent(eventId);
 			initWidgets(event);
 			date = event.getDate();
 		} else {
@@ -80,6 +80,14 @@ public class EditEventActivity extends Activity {
 		return true;
 	}
 
+	private Event createEvent() {
+		EditText eventNameEditText = (EditText) findViewById(R.id.event_name);
+		EditText detailsEditText = (EditText) findViewById(R.id.event_details);
+		String eventName = eventNameEditText.getText().toString();
+		String eventDetails = detailsEditText.getText().toString();
+		Date date = DatePickerFragment.getDate();
+		return new Event(eventName, date, eventDetails);
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -94,10 +102,10 @@ public class EditEventActivity extends Activity {
 			startActivity(intent);
 			break;
 		case R.id.menu_save:
-			EditText eventNameEditText = (EditText) findViewById(R.id.event_name);
-			String eventName = eventNameEditText.getText().toString();
-			if (!eventName.equals("")) {
-				helper.addEvent(eventName);
+			
+			Event event = createEvent();
+			if (!event.getName().equals("")) {
+				helper.addEvent(event);
 				intent = new Intent(this, EventListActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);

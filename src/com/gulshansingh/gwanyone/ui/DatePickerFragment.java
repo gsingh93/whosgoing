@@ -51,4 +51,8 @@ public class DatePickerFragment extends DialogFragment implements
 				"EEE, MMM d, yyyy", Locale.US);
 		textView.setText(dateFormatter.format(cal.getTime()));
 	}
+
+	public static Date getDate() {
+		return date;
+	}
 }

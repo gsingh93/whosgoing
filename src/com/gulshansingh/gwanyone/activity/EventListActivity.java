@@ -65,7 +65,8 @@ public class EventListActivity extends ListActivity {
 					int position, long id) {
 				Intent intent = new Intent(getApplicationContext(),
 						EventDetailsActivity.class);
-				intent.putExtra("event_name", ((TextView) view).getText());
+				// Integer eventId = (Integer) ((TextView) view).getTag();
+				intent.putExtra("event_id", (int) id); // TODO
 				startActivity(intent);
 			}
 		});

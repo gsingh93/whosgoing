@@ -81,8 +81,8 @@ public class EventDetailsActivity extends Activity {
 			break;
 		case R.id.menu_edit:
 			intent = new Intent(this, EditEventActivity.class);
-			intent.putExtra("event_name",
-					getIntent().getStringExtra("event_name"));
+			int eventId = getIntent().getIntExtra("event_id", -1);
+			intent.putExtra("event_id", eventId);
 			startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);

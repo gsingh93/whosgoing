@@ -38,6 +38,8 @@ public class ChangeLog {
 	// this is the key for storing the version name in SharedPreferences
 	private static final String VERSION_KEY = "PREFS_VERSION_KEY";
 
+	private static final String NO_VERSION = "";
+
 	/**
 	 * Constructor
 	 * 
@@ -64,13 +66,13 @@ public class ChangeLog {
 		this.context = context;
 
 		// get version numbers
-		this.lastVersion = sp.getString(VERSION_KEY, "");
+		this.lastVersion = sp.getString(VERSION_KEY, NO_VERSION);
 		Log.d(TAG, "lastVersion: " + lastVersion);
 		try {
 			this.thisVersion = context.getPackageManager().getPackageInfo(
 					context.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
-			this.thisVersion = "?";
+			this.thisVersion = NO_VERSION;
 			Log.e(TAG, "could not get version name from manifest!");
 			e.printStackTrace();
 		}
@@ -106,20 +108,22 @@ public class ChangeLog {
 	}
 
 	/**
-	 * @return <code>true</code> if your app is started the first time ever.
-	 *         Also <code>true</code> if your app was deinstalled and installed
-	 *         again.
+	 * @return <code>true</code> if your app including ChangeLog is started the
+	 *         first time ever. Also <code>true</code> if your app was
+	 *         deinstalled and installed again.
 	 */
 	public boolean firstRunEver() {
-		return "".equals(this.lastVersion);
+		return NO_VERSION.equals(this.lastVersion);
 	}
 
 	/**
-	 * @return an AlertDialog displaying the changes since the previous
-	 *         installed version of your app (what's new).
+	 * @return An AlertDialog displaying the changes since the previous
+	 *         installed version of your app (what's new). But when this is the
+	 *         first run of your app including ChangeLog then the full log
+	 *         dialog is show.
 	 */
 	public AlertDialog getLogDialog() {
-		return this.getDialog(false);
+		return this.getDialog(this.firstRunEver());
 	}
 
 	/**

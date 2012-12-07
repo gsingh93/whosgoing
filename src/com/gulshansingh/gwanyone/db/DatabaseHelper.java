@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
 import com.gulshansingh.gwanyone.Event;
 
@@ -14,20 +15,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "gwanyone_db";
-	// private static final String TABLE_CACHE = "cache";
-	public static final String TABLE_EVENTS = "events";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_TIMESTAMP = "timestamp";
-	public static final String COLUMN_DETAILS = "details";
+
+	public static class Events implements BaseColumns {
+		public static final String TABLE_EVENTS = "events";
+		public static final String _ID = BaseColumns._ID;
+		public static final String NAME = "name";
+		public static final String TIMESTAMP = "timestamp";
+		public static final String DETAILS = "details";
+	}
 
 	// @formatter:off
 	private static final String QUERY_CREATE_TABLE =
-			"CREATE TABLE "	+ TABLE_EVENTS + "( " +
-			COLUMN_ID + " integer primary key autoincrement, " +
-			COLUMN_NAME + " text not null, " +
-			COLUMN_TIMESTAMP + " int not null, " +
-			COLUMN_DETAILS + " text not null);";
+			"CREATE TABLE "	+ Events.TABLE_EVENTS + "( " +
+			Events._ID + " integer primary key autoincrement, " +
+			Events.NAME + " text not null, " +
+			Events.TIMESTAMP + " int not null, " +
+			Events.DETAILS + " text not null);";
 	// @formatter:on
 
 	public DatabaseHelper(Context context) {
@@ -46,24 +49,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void addEvent(Event event) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_NAME, event.getName());
-		values.put(COLUMN_TIMESTAMP, event.getDate().getTime());
-		values.put(COLUMN_DETAILS, event.getDetails());
-		db.insert(TABLE_EVENTS, null, values);
+		values.put(Events.NAME, event.getName());
+		values.put(Events.TIMESTAMP, event.getDate().getTime());
+		values.put(Events.DETAILS, event.getDetails());
+		db.insert(Events.TABLE_EVENTS, null, values);
 		db.close();
 	}
 
 	public void deleteEvent(String eventName) {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(TABLE_EVENTS, COLUMN_NAME + "=?", new String[] { eventName });
+		db.delete(Events.TABLE_EVENTS, Events.NAME + "=?", new String[] { eventName });
 		db.close();
 	}
 
 	public Cursor getEventsCursor() {
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor cursor = db.query(DatabaseHelper.TABLE_EVENTS, new String[] {
-				DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NAME }, null,
-				null, null, null, null);
+		Cursor cursor = db.query(Events.TABLE_EVENTS, new String[] {
+				DatabaseHelper.Events._ID, DatabaseHelper.Events.NAME }, null, null, null,
+				null, null);
 		return cursor;
 	}
 
@@ -71,19 +74,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Event getEvent(int eventId) {
 		SQLiteDatabase db = getReadableDatabase();
 		// Cursor cursor = db.query(
-		// DatabaseHelper.TABLE_EVENTS,
-		// new String[] { DatabaseHelper.COLUMN_ID,
-		// DatabaseHelper.COLUMN_NAME },
-		// COLUMN_NAME + "=? AND " + COLUMN_TIMESTAMP + "=?" + " AND "
-		// + COLUMN_DETAILS + "=?",
+		// DatabaseHelper.Events.TABLE_EVENTS,
+		// new String[] { DatabaseHelper.COLUMNEvents._ID,
+		// DatabaseHelper.COLUMN_Events.NAME },
+		// COLUMN_Events.NAME + "=? AND " + COLUMN_Events.TIMESTAMP + "=?" + " AND "
+		// + COLUMN_Events.DETAILS + "=?",
 		// new String[] { event.getName(),
 		// String.valueOf(event.getDate().getTime()),
 		// event.getDetails() }, null, null, null);
-		Cursor cursor = db.query(DatabaseHelper.TABLE_EVENTS,
-				new String[] { DatabaseHelper.COLUMN_ID,
-						DatabaseHelper.COLUMN_NAME,
-						DatabaseHelper.COLUMN_TIMESTAMP,
-						DatabaseHelper.COLUMN_DETAILS }, COLUMN_ID + "=?",
+		Cursor cursor = db.query(Events.TABLE_EVENTS, new String[] {
+				DatabaseHelper.Events._ID, DatabaseHelper.Events.NAME,
+				DatabaseHelper.Events.TIMESTAMP, DatabaseHelper.Events.DETAILS }, Events._ID + "=?",
 				new String[] { String.valueOf(eventId) }, null, null, null);
 
 		cursor.moveToFirst();
@@ -91,9 +92,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	private Event getEventFromCursor(Cursor c) {
-		int nameIndex = c.getColumnIndex(COLUMN_NAME);
-		int timestampIndex = c.getColumnIndex(COLUMN_TIMESTAMP);
-		int detailsIndex = c.getColumnIndex(COLUMN_DETAILS);
+		int nameIndex = c.getColumnIndex(Events.NAME);
+		int timestampIndex = c.getColumnIndex(Events.TIMESTAMP);
+		int detailsIndex = c.getColumnIndex(Events.DETAILS);
 
 		String name = c.getString(nameIndex);
 		int timestamp = c.getInt(timestampIndex);

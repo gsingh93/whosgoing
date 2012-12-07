@@ -54,7 +54,7 @@ public class EventListActivity extends ListActivity {
 		@SuppressWarnings("deprecation")
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, cursor,
-				new String[] { DatabaseHelper.COLUMN_NAME },
+				new String[] { DatabaseHelper.Events.NAME },
 				new int[] { android.R.id.text1 });
 		setListAdapter(adapter);
 

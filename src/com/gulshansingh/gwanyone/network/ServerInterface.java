@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,6 +22,8 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.gulshansingh.gwanyone.activity.EventDetailsActivity.AsyncTaskCompleteListener;
 
 public class ServerInterface {
 
@@ -54,7 +55,8 @@ public class ServerInterface {
 			HttpPost httpPost = new HttpPost(REGISTER_URL);
 
 			try {
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
+						1);
 				nameValuePairs.add(new BasicNameValuePair("user", args[0]));
 
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
@@ -76,36 +78,14 @@ public class ServerInterface {
 		}
 	}
 
-	public ArrayList<String> getPeopleGoing() {
-		AsyncTask<Answer, Void, ArrayList<String>> task = new GetPeopleTask()
-				.execute(Answer.YES);
-
-		ArrayList<String> result = null;
-		try {
-			result = task.get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-
-		return result;
+	public void getPeopleGoing(
+			AsyncTaskCompleteListener<ArrayList<String>> listener) {
+		new GetPeopleTask(listener).execute(Answer.YES);
 	}
 
-	public ArrayList<String> getPeopleNotGoing() {
-		AsyncTask<Answer, Void, ArrayList<String>> task = new GetPeopleTask()
-				.execute(Answer.NO);
-
-		ArrayList<String> result = null;
-		try {
-			result = task.get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-
-		return result;
+	public void getPeopleNotGoing(
+			AsyncTaskCompleteListener<ArrayList<String>> listener) {
+		new GetPeopleTask(listener).execute(Answer.NO);
 	}
 
 	public void answerYes(String user) {
@@ -126,7 +106,8 @@ public class ServerInterface {
 			HttpPost httpPost = new HttpPost(URL);
 
 			try {
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
+						2);
 				nameValuePairs.add(new BasicNameValuePair("user", args[1]));
 				nameValuePairs.add(new BasicNameValuePair("answer", args[0]));
 
@@ -151,6 +132,13 @@ public class ServerInterface {
 
 	private class GetPeopleTask extends
 			AsyncTask<Answer, Void, ArrayList<String>> {
+
+		private AsyncTaskCompleteListener<ArrayList<String>> listener;
+
+		public GetPeopleTask(AsyncTaskCompleteListener<ArrayList<String>> l) {
+			listener = l;
+		}
+
 		@Override
 		protected ArrayList<String> doInBackground(Answer... args) {
 			if (args.length != 1) {
@@ -189,6 +177,10 @@ public class ServerInterface {
 			}
 
 			return result;
+		}
+
+		protected void onPostExecute(ArrayList<String> list) {
+			listener.onComplete(list);
 		}
 	}
 }

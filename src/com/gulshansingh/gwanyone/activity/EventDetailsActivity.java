@@ -35,32 +35,58 @@ public class EventDetailsActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(event.getName());
 
-		populatePeopleGoing();
+		refresh();
+		// populatePeopleGoing();
 	}
 
-	private void populatePeopleGoing() {
-		ArrayList<String> peopleGoing = serverInterface.getPeopleGoing();
-		ArrayList<String> peopleNotGoing = serverInterface.getPeopleNotGoing();
+	private void refresh() {
+		serverInterface.getPeopleGoing(new GetPeopleGoingCompletedListener());
+		serverInterface
+				.getPeopleNotGoing(new GetPeopleNotGoingCompletedListener());
+	}
+
+	public interface AsyncTaskCompleteListener<T> {
+		public void onComplete(T result);
+	}
+
+	private class GetPeopleGoingCompletedListener implements
+			AsyncTaskCompleteListener<ArrayList<String>> {
+		@Override
+		public void onComplete(ArrayList<String> list) {
+			populatePeopleGoing(list);
+		}
+	}
+
+	private class GetPeopleNotGoingCompletedListener implements
+			AsyncTaskCompleteListener<ArrayList<String>> {
+		@Override
+		public void onComplete(ArrayList<String> list) {
+			populatePeopleNotGoing(list);
+		}
+	}
+
+	private void populatePeopleGoing(ArrayList<String> peopleGoing) {
+		TextView peopleGoingTextView = (TextView) findViewById(R.id.people_going);
 
 		StringBuilder sb = new StringBuilder();
 		for (String person : peopleGoing) {
 			sb.append(person).append('\n');
 		}
 		String peopleGoingString = sb.toString();
-
-		sb = new StringBuilder();
-		for (String person : peopleNotGoing) {
-			sb.append(person).append('\n');
-		}
-		String peopleNotGoingString = sb.toString();
-
-		TextView peopleGoingTextView = (TextView) findViewById(R.id.people_going);
-		TextView peopleNotGoingTextView = (TextView) findViewById(R.id.people_not_going);
 		if (peopleGoingString.equals("")) {
 			peopleGoingTextView.setText(R.string.no_people_going);
 		} else {
 			peopleGoingTextView.setText(peopleGoingString);
 		}
+	}
+
+	private void populatePeopleNotGoing(ArrayList<String> peopleNotGoing) {
+		StringBuilder sb = new StringBuilder();
+		for (String person : peopleNotGoing) {
+			sb.append(person).append('\n');
+		}
+		String peopleNotGoingString = sb.toString();
+		TextView peopleNotGoingTextView = (TextView) findViewById(R.id.people_not_going);
 		peopleNotGoingTextView.setText(peopleNotGoingString);
 
 	}
@@ -82,7 +108,7 @@ public class EventDetailsActivity extends Activity {
 			startActivity(intent);
 			break;
 		case R.id.menu_refresh:
-			populatePeopleGoing();
+			refresh();
 			break;
 		case R.id.menu_edit:
 			intent = new Intent(this, EditEventActivity.class);
@@ -97,13 +123,13 @@ public class EventDetailsActivity extends Activity {
 
 	public void yesClicked(View v) {
 		serverInterface.answerYes(prefs.getUsername());
-		populatePeopleGoing();
+		refresh();
 		prefs.setAnswered(true);
 	}
 
 	public void noClicked(View v) {
 		serverInterface.answerNo(prefs.getUsername());
-		populatePeopleGoing();
+		refresh();
 		prefs.setAnswered(true);
 	}
 }

@@ -19,6 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static class Events implements BaseColumns {
 		public static final String TABLE_EVENTS = "events";
 		public static final String _ID = BaseColumns._ID;
+		public static final String EVENT_ID = "event_id";
 		public static final String NAME = "name";
 		public static final String TIMESTAMP = "timestamp";
 		public static final String DETAILS = "details";
@@ -28,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String QUERY_CREATE_TABLE =
 			"CREATE TABLE "	+ Events.TABLE_EVENTS + "( " +
 			Events._ID + " integer primary key autoincrement, " +
+			Events.EVENT_ID + " integer unique not null, " + 
 			Events.NAME + " text not null, " +
 			Events.TIMESTAMP + " int not null, " +
 			Events.DETAILS + " text not null);";
@@ -49,10 +51,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void addEvent(Event event) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
+		int id = 102381;
+		if (event.getId() == -1) {
+			values.put(Events.EVENT_ID, id);
+		} else {
+			values.put(Events.EVENT_ID, event.getId());
+		}
 		values.put(Events.NAME, event.getName());
 		values.put(Events.TIMESTAMP, event.getDate().getTime());
 		values.put(Events.DETAILS, event.getDetails());
-		db.insert(Events.TABLE_EVENTS, null, values);
+		db.insertWithOnConflict(Events.TABLE_EVENTS, null, values,
+				SQLiteDatabase.CONFLICT_REPLACE);
 		db.close();
 	}
 
@@ -66,8 +75,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public Cursor getEventsCursor() {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(Events.TABLE_EVENTS, new String[] {
-				Events._ID, Events.NAME, Events.TIMESTAMP, Events.DETAILS },
-				null, null, null, null, null);
+				Events._ID, Events.EVENT_ID, Events.NAME, Events.TIMESTAMP,
+				Events.DETAILS }, null, null, null, null, null);
 		return cursor;
 	}
 
@@ -96,14 +105,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	public static Event getEventFromCursor(Cursor c) {
+		int eventIdIndex = c.getColumnIndexOrThrow(Events.EVENT_ID);
 		int nameIndex = c.getColumnIndexOrThrow(Events.NAME);
 		int timestampIndex = c.getColumnIndexOrThrow(Events.TIMESTAMP);
 		int detailsIndex = c.getColumnIndexOrThrow(Events.DETAILS);
 
+		int id = c.getInt(eventIdIndex);
 		String name = c.getString(nameIndex);
 		long timestamp = c.getLong(timestampIndex);
 		String details = c.getString(detailsIndex);
 
-		return new Event(name, new Date(timestamp), details);
+		return new Event(id, name, new Date(timestamp), details);
 	}
 }

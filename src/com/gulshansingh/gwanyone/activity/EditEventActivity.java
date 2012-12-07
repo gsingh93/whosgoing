@@ -86,8 +86,14 @@ public class EditEventActivity extends Activity {
 		String eventName = eventNameEditText.getText().toString();
 		String eventDetails = detailsEditText.getText().toString();
 		Date date = DatePickerFragment.getDate();
-		return new Event(eventName, date, eventDetails);
+		if (event != null) {
+			int id = event.getId();
+			return new Event(id, eventName, date, eventDetails);
+		} else {
+			return new Event(eventName, date, eventDetails);
+		}
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();

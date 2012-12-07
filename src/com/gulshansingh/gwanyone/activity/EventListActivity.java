@@ -20,11 +20,10 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.CursorAdapter;
-import android.widget.SimpleCursorAdapter;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.gulshansingh.gwanyone.Event;
 import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.db.DatabaseHelper;
 import com.gulshansingh.gwanyone.network.ServerInterface;
@@ -51,11 +50,7 @@ public class EventListActivity extends ListActivity {
 
 		DatabaseHelper db = new DatabaseHelper(this);
 		Cursor cursor = db.getEventsCursor();
-		@SuppressWarnings("deprecation")
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, cursor,
-				new String[] { DatabaseHelper.Events.NAME },
-				new int[] { android.R.id.text1 });
+		EventCursorAdapter adapter = new EventCursorAdapter(this, cursor);
 		setListAdapter(adapter);
 
 		ListView list = getListView();
@@ -65,8 +60,8 @@ public class EventListActivity extends ListActivity {
 					int position, long id) {
 				Intent intent = new Intent(getApplicationContext(),
 						EventDetailsActivity.class);
-				// Integer eventId = (Integer) ((TextView) view).getTag();
-				intent.putExtra("event_id", (int) id); // TODO
+				Event event = (Event) view.getTag();
+				intent.putExtra(Event.EXTRA_KEY, event);
 				startActivity(intent);
 			}
 		});
@@ -161,7 +156,7 @@ public class EventListActivity extends ListActivity {
 
 	private void updateAdapter() {
 		DatabaseHelper db = new DatabaseHelper(this);
-		CursorAdapter ca = (CursorAdapter) getListAdapter();
+		EventCursorAdapter ca = (EventCursorAdapter) getListAdapter();
 		Cursor c = ca.getCursor();
 		c.close();
 		ca.changeCursor(db.getEventsCursor());

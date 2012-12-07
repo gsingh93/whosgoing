@@ -23,18 +23,18 @@ import com.gulshansingh.gwanyone.ui.TimePickerFragment;
 
 public class EditEventActivity extends Activity {
 
+	private Event event;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_event);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		int eventId = getIntent().getIntExtra("event_id", -1);
+		event = (Event) getIntent().getSerializableExtra(Event.EXTRA_KEY);
 
 		Date date;
-		if (eventId != -1) {
-			DatabaseHelper helper = new DatabaseHelper(this);
-			Event event = helper.getEvent(eventId);
-			initWidgets(event);
+		if (event != null) {
+			initWidgets();
 			date = event.getDate();
 		} else {
 			date = new Date();
@@ -65,7 +65,7 @@ public class EditEventActivity extends Activity {
 		d.show(getSupportFragmentManager());
 	}
 
-	private void initWidgets(Event event) {
+	private void initWidgets() {
 		EditText editTextName = (EditText) findViewById(R.id.event_name);
 		EditText editTextDetails = (EditText) findViewById(R.id.event_details);
 
@@ -96,13 +96,11 @@ public class EditEventActivity extends Activity {
 		switch (id) {
 		case android.R.id.home:
 			intent = new Intent(this, EventDetailsActivity.class);
-			intent.putExtra("event_name",
-					getIntent().getStringExtra("event_name"));
+			intent.putExtra(Event.EXTRA_KEY, event);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
 		case R.id.menu_save:
-			
 			Event event = createEvent();
 			if (!event.getName().equals("")) {
 				helper.addEvent(event);

@@ -14,7 +14,7 @@ import com.gulshansingh.gwanyone.Event;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "gwanyone_db";
+	private static final String DATABASE_NAME = "gwanyone.db";
 
 	public static class Events implements BaseColumns {
 		public static final String TABLE_EVENTS = "events";
@@ -58,15 +58,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public void deleteEvent(String eventName) {
 		SQLiteDatabase db = getWritableDatabase();
-		db.delete(Events.TABLE_EVENTS, Events.NAME + "=?", new String[] { eventName });
+		db.delete(Events.TABLE_EVENTS, Events.NAME + "=?",
+				new String[] { eventName });
 		db.close();
 	}
 
 	public Cursor getEventsCursor() {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor cursor = db.query(Events.TABLE_EVENTS, new String[] {
-				DatabaseHelper.Events._ID, DatabaseHelper.Events.NAME }, null, null, null,
-				null, null);
+				Events._ID, Events.NAME, Events.TIMESTAMP, Events.DETAILS },
+				null, null, null, null, null);
 		return cursor;
 	}
 
@@ -77,27 +78,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// DatabaseHelper.Events.TABLE_EVENTS,
 		// new String[] { DatabaseHelper.COLUMNEvents._ID,
 		// DatabaseHelper.COLUMN_Events.NAME },
-		// COLUMN_Events.NAME + "=? AND " + COLUMN_Events.TIMESTAMP + "=?" + " AND "
+		// COLUMN_Events.NAME + "=? AND " + COLUMN_Events.TIMESTAMP + "=?" +
+		// " AND "
 		// + COLUMN_Events.DETAILS + "=?",
 		// new String[] { event.getName(),
 		// String.valueOf(event.getDate().getTime()),
 		// event.getDetails() }, null, null, null);
-		Cursor cursor = db.query(Events.TABLE_EVENTS, new String[] {
-				DatabaseHelper.Events._ID, DatabaseHelper.Events.NAME,
-				DatabaseHelper.Events.TIMESTAMP, DatabaseHelper.Events.DETAILS }, Events._ID + "=?",
+		Cursor cursor = db.query(Events.TABLE_EVENTS,
+				new String[] { DatabaseHelper.Events._ID,
+						DatabaseHelper.Events.NAME,
+						DatabaseHelper.Events.TIMESTAMP,
+						DatabaseHelper.Events.DETAILS }, Events._ID + "=?",
 				new String[] { String.valueOf(eventId) }, null, null, null);
 
 		cursor.moveToFirst();
 		return getEventFromCursor(cursor);
 	}
 
-	private Event getEventFromCursor(Cursor c) {
-		int nameIndex = c.getColumnIndex(Events.NAME);
-		int timestampIndex = c.getColumnIndex(Events.TIMESTAMP);
-		int detailsIndex = c.getColumnIndex(Events.DETAILS);
+	public static Event getEventFromCursor(Cursor c) {
+		int nameIndex = c.getColumnIndexOrThrow(Events.NAME);
+		int timestampIndex = c.getColumnIndexOrThrow(Events.TIMESTAMP);
+		int detailsIndex = c.getColumnIndexOrThrow(Events.DETAILS);
 
 		String name = c.getString(nameIndex);
-		int timestamp = c.getInt(timestampIndex);
+		long timestamp = c.getLong(timestampIndex);
 		String details = c.getString(detailsIndex);
 
 		return new Event(name, new Date(timestamp), details);

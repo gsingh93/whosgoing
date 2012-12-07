@@ -12,6 +12,7 @@ import android.view.View;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.gulshansingh.gwanyone.Event;
 import com.gulshansingh.gwanyone.R;
 import com.gulshansingh.gwanyone.network.ServerInterface;
 import com.gulshansingh.gwanyone.settings.PreferenceInterface;
@@ -21,14 +22,18 @@ public class EventDetailsActivity extends Activity {
 	private ServerInterface serverInterface = new ServerInterface();
 	private PreferenceInterface prefs;
 
+	private Event event;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_details);
 		prefs = new PreferenceInterface(this);
+		event = (Event) getIntent().getSerializableExtra(Event.EXTRA_KEY);
+
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(getIntent().getStringExtra("event_name"));
+		actionBar.setTitle(event.getName());
 
 		populatePeopleGoing();
 	}
@@ -81,8 +86,7 @@ public class EventDetailsActivity extends Activity {
 			break;
 		case R.id.menu_edit:
 			intent = new Intent(this, EditEventActivity.class);
-			int eventId = getIntent().getIntExtra("event_id", -1);
-			intent.putExtra("event_id", eventId);
+			intent.putExtra(Event.EXTRA_KEY, event);
 			startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);
